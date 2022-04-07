@@ -1,0 +1,45 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  @@map(name: "user")
+  id Int @default(autoincrement()) @id 
+  lastname String @db.Char(50)
+  firstname String @db.Char(50)
+  password String @db.Char(255)
+  birthdate DateTime 
+  email String @db.Char(50) @unique
+  department String @db.Char(50)
+  admin Boolean @default(false)
+  messages Message[]
+  post Post[]
+}
+
+model Post {
+  @@map(name:"post")
+  id Int @default(autoincrement()) @id
+  user User @relation(fields: [userid], references: [id])
+  userid Int
+  post_text String @db.VarChar(255)
+  created_at DateTime @default(now())
+  uptdated_at DateTime @updatedAt
+  messages Message[]
+}
+
+model Message {
+  @@map(name: "message")
+  id Int @default(autoincrement()) @id
+  user User @relation(fields: [userid], references: [id])
+  userid Int
+  message_text String @db.VarChar(255)
+  created_at DateTime @default(now())
+  uptdated_at DateTime @updatedAt
+  post Post @relation(fields: [post_id], references: [id])
+  post_id Int
+}
