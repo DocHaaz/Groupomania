@@ -2,7 +2,7 @@ const { PrismaClient, prisma } = require("@prisma/client")
 
 const { message } = new PrismaClient()
 
-//router.get('/:id', auth, messageController.getOneMessage);
+// Lecture d'un message
 exports.getOneMessage = async (req, res, next) => {
     const oneMessage = await message.findUnique({
         where: {
@@ -12,34 +12,34 @@ exports.getOneMessage = async (req, res, next) => {
     res.json(oneMessage)
 }
 
-//router.post('/', auth, messageController.createMessage);
+// Création d'un message
 exports.createMessage = async (req, res) => {
-    const { userid, message, post_id } = req.body
+    const { userid, message_text, post_id } = req.body
     const postcreated = await message.create({
         data: {
             userid: parseInt(userid),
-            message,
+            message_text,
             post_id: parseInt(post_id)
         }
     })
     res.json(postcreated)
 }
 
-//router.put('/:id', auth, messageController.modifyMessage)
+// Modification d'un message
 exports.modifyMessage = async (req, res) => {
-    const message = req.body.message
+    const message_text = req.body.message_text
     const messageModified = await message.update({
         where: {
             id: parseInt(req.params.id)
         },
         data: {
-            message
+            message_text
         }
     })
     res.json(messageModified)
 }
 
-//router.delete('/:id', auth, messageController.deleteMessage)
+// Suppression d'un message
 exports.deleteMessage = async (req, res) => {
     const messageDeleted = await message.delete({
         where: {

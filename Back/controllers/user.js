@@ -6,8 +6,10 @@ const bCrypt = require('bcrypt')
 const jsonWebToken = require('jsonwebtoken')
 const { PrismaClient, prisma } = require("@prisma/client")
 
+// Importation du schéma via prismaclient
 const { user } = new PrismaClient()
 
+// Inscription d'un nouvel utilisateur
 exports.signup = async (req, res) => {
     const { lastname, firstname, birthdate, email, department } = req.body
     const userExist = await user.findUnique({
@@ -32,6 +34,7 @@ exports.signup = async (req, res) => {
         res.json(newUser)
 }
 
+// Connexion d'un utilisateur (existant)
 exports.login = async (req, res) => {
     const userLogin = await user.findUnique({
         where: {
@@ -53,7 +56,7 @@ exports.login = async (req, res) => {
     }
 }
 
-//router.get('/account', auth, userController.account);
+// Accès au compte de l'utilisateur
 exports.account = async (req, res) => {
     const userAccount = await user.findUnique({
         where: {
@@ -68,7 +71,7 @@ exports.account = async (req, res) => {
     }
 }
 
-//router.put('/modify', auth, userController.modify);
+// Modification d'un compte
 exports.modify = async (req, res) => {
     const { lastname, firstname, birthdate, email, department } = req.body
     if( req.body.password) {
@@ -104,7 +107,7 @@ exports.modify = async (req, res) => {
     }
 }
 
-//router.delete('/delete, auth, userController.delete);
+// Suppression d'un compte
 exports.delete = async (req, res) => {
     const userDelete = await user.delete({
         where: {

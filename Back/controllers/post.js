@@ -1,15 +1,17 @@
+// Importation des modules / package
 const { PrismaClient, prisma } = require("@prisma/client")
 
+// Importation du schéma via prismaclient
 const { post } = new PrismaClient()
 const { message } = new PrismaClient()
 
-//router.get('/', auth, postController.getAllPost);
+// Lecture de l'ensemble des posts
 exports.getAllPost = async (req, res) => {
     const posts = await post.findMany()
     res.json(posts)
 }
 
-//router.get('/:id', auth, postController.getOnePost);
+// Lecture d'un post avec ces message
 exports.getOnePost = async (req, res, next) => {
     const onePost = await post.findUnique({
         where: {
@@ -28,33 +30,33 @@ exports.getOnePost = async (req, res, next) => {
     res.json(allData)
 }
 
-//router.post('/', auth, postController.createPost);
+// Création d'un post
 exports.createPost = async (req, res) => {
-    const { userid, message } = req.body
+    const { userid, post_text } = req.body
     const postcreated = await post.create({
         data: {
             userid: parseInt(userid),
-            message
+            post_text
         }
     })
     res.json(postcreated)
 }
 
-//router.put('/:id', auth, postController.modifyPost)
+// Modification d'un post
 exports.modifyPost = async (req, res) => {
-    const message = req.body.message
+    const post_text = req.body.post_text
     const postModified = await post.update({
         where: {
             id: parseInt(req.params.id)
         },
         data: {
-            message
+            post_text
         }
     })
     res.json(postModified)
 }
 
-//router.delete('/:id, auth, postController.deletePost)
+// Suppression d'un post
 exports.deletePost = async (req, res) => {
     const postDeleted = await post.delete({
         where: {

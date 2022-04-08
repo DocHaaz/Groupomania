@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
             throw 'User ID non valide';
         } 
         else {
+            console.log('auth')
             next();
         }
     } catch (error) {

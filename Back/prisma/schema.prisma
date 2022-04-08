@@ -1,12 +1,15 @@
+// Connexion a la base de donnée SQL
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
+// Création du client prisma
 generator client {
   provider = "prisma-client-js"
 }
 
+// Modèle utilisateur 
 model User {
   @@map(name: "user")
   id Int @default(autoincrement()) @id 
@@ -21,6 +24,7 @@ model User {
   post Post[]
 }
 
+// Modèle Post
 model Post {
   @@map(name:"post")
   id Int @default(autoincrement()) @id
@@ -32,6 +36,7 @@ model Post {
   messages Message[]
 }
 
+// Modèle Message
 model Message {
   @@map(name: "message")
   id Int @default(autoincrement()) @id
