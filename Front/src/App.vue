@@ -5,7 +5,10 @@
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #FD2D01;
+  width: 80%;
+  margin: auto;
+}
+body {
+  margin: 0%;
 }
 </style>

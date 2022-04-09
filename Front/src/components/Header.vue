@@ -1,12 +1,14 @@
 <template>
-  <div class="home">
+  <nav class="container">
+    <header class="d-flex justify-content-between align-items-center py-3">
     <router-link to="/"><img alt="Logo de Groupomania" src="../assets/logo.png"></router-link>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/user">Mon Compte</router-link> |
-      <button class="logoff__button" @click="logoff">Déconnection</button>
-    </nav>
-  </div>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><router-link to="/" class="nav-link">Accueil</router-link></li>
+        <li class="nav-item"><router-link to="/user" class="nav-link">Mon Compte</router-link></li>
+        <li class="nav-item"><router-link to="/disconnect" class="nav-link">Déconnexion</router-link></li>
+      </ul>
+    </header>
+  </nav>
 </template>
 
 <script>
@@ -16,30 +18,35 @@ export default {
 </script>
 
 <style scoped>
-.home {
+nav {
+  margin-bottom: 120px;
+}
+
+.header {
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: space-between;
+  margin-bottom: 120px;
 }
 
 img {
   width: 500px;
 }
 
-nav {
-  margin-right: 5%;
-}
-
 nav a {
   font-weight: bold;
+  text-decoration: none;
   color: #1B75BC;
 }
 
 nav a.router-link-exact-active {
-  color: #FD2D01;
+  background-color: #FF4019;
+  color: #FFFF;
 }
 
-.logoff__button {
-  color: #FD2D01;
+.navButton {
+  padding: 14px;
+  border-radius: 12px;
+  background-color: #1B75BC;
 }
 </style>

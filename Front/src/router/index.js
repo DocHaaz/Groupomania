@@ -8,9 +8,9 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/tchat',
-    name: 'tchat',
-    component: () => import('../views/TchatView.vue')
+    path: '/post',
+    name: 'post',
+    component: () => import('../views/PostView.vue')
   },
   {
     path: '/user',
