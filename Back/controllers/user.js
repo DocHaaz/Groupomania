@@ -11,27 +11,29 @@ const { user } = new PrismaClient()
 
 // Inscription d'un nouvel utilisateur
 exports.signup = async (req, res) => {
-    const { lastname, firstname, birthdate, email, department } = req.body
-    const userExist = await user.findUnique({
-        where: {
-            email
+    const { lastname, firstname, email } = req.body
+    if  (lastname != '' && firstname != '' && email != '' && req.body.password != '') {
+        const userExist = await user.findUnique({
+            where: {
+                email
+            }
+        })
+        if(userExist) {
+            return res.status(401).json({ error: 'Un compte avec cette adresse email existe déjà'})
         }
-    })
-    if(userExist) {
-        return res.status(401).json({ error: 'Un compte avec cette adresse email existe déjà'})
+        const hash = await bCrypt.hash(req.body.password, 10)
+        const newUser = await user.create({
+            data: {
+                lastname,
+                firstname,
+                password: JSON.stringify(hash),
+                email,
+            }
+        })
+            res.json(newUser)
+    } else {
+        return res.status(401).json({ error: 'Veuillez remplir tout les champs'})
     }
-    const hash = await bCrypt.hash(req.body.password, 10)
-    const newUser = await user.create({
-        data: {
-            lastname,
-            firstname,
-            password: JSON.stringify(hash),
-            birthdate,
-            email,
-            department
-        }
-    })
-        res.json(newUser)
 }
 
 // Connexion d'un utilisateur (existant)

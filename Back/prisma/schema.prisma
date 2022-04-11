@@ -16,9 +16,7 @@ model User {
   lastname String @db.Char(50)
   firstname String @db.Char(50)
   password String @db.Char(255)
-  birthdate DateTime 
   email String @db.Char(50) @unique
-  department String @db.Char(50)
   admin Boolean @default(false)
   messages Message[]
   post Post[]

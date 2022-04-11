@@ -10,12 +10,10 @@ module.exports = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jsonWebToken.verify(token, process.env.TokenSecret);
         const userId = decodedToken.userId;
-        req.auth = { userId: userId };
         if(req.body.userId && req.body.userId !== userId) {
             throw 'User ID non valide';
         } 
         else {
-            console.log('auth')
             next();
         }
     } catch (error) {

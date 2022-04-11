@@ -1,7 +1,7 @@
 // Importation des modules / package
 const express = require('express')
 const auth = require('../middleware/auth')
-const owner = require('../middleware/owner')
+const owner = require('../middleware/userOwner')
 const userController = require('../controllers/user')
 
 // Création du router
