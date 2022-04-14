@@ -52,10 +52,16 @@ exports.login = async (req, res) => {
     }
     if (login) {
         return res.status(200).json({
-            userId: user._id,
+            userId: userLogin.id,
             token: jsonWebToken.sign({ userId: userLogin.id, userAdmin: userLogin.admin}, process.env.TokenSecret, { expiresIn: '24h'})
         })
     }
+}
+
+// récupération de l'ensemble des utilisateur
+exports.getAllUser = async (req, res) => {
+    const Users = await user.findMany()
+    res.json(Users)
 }
 
 // Accès au compte de l'utilisateur
@@ -66,7 +72,7 @@ exports.account = async (req, res) => {
         }
     })
     if (!userAccount) {
-        return res.status(403).json({ message: 'Requête non authorisée'})
+        return res.status(403).json({ message: 'Utilisateur inconnu'})
     }
     if (userAccount) {
         return res.json(userAccount)

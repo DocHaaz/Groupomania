@@ -4,9 +4,9 @@ const { message } = new PrismaClient()
 
 // Lecture d'un message
 exports.getOneMessage = async (req, res, next) => {
-    const oneMessage = await message.findUnique({
+    const oneMessage = await message.findMany({
         where: {
-            id: parseInt(req.params.id)
+            post_id: parseInt(req.params.id)
         }
     })
     res.json(oneMessage)
@@ -14,6 +14,7 @@ exports.getOneMessage = async (req, res, next) => {
 
 // Création d'un message
 exports.createMessage = async (req, res) => {
+    console.log('test')
     const { userid, message_text, post_id } = req.body
     const postcreated = await message.create({
         data: {

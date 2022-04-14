@@ -10,7 +10,8 @@ const router = express.Router()
 // Création des routes Users
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);
-router.get('/:id', auth, owner, userController.account);
+router.get('/', auth, userController.getAllUser);
+router.get('/:id', auth, userController.account);
 router.put('/:id', auth, owner, userController.modify);
 router.delete('/:id', auth, owner, userController.delete);
 

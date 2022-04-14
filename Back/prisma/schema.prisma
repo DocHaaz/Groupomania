@@ -28,6 +28,7 @@ model Post {
   id Int @default(autoincrement()) @id
   user User @relation(fields: [userid], references: [id])
   userid Int
+  post_title String @db.VarChar(50)
   post_text String @db.VarChar(255)
   created_at DateTime @default(now())
   uptdated_at DateTime @updatedAt

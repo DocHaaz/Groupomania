@@ -1,27 +1,80 @@
 <template>
   <Header/>
-  <h1 class="col-8">Compte de {{ user }} </h1>
-  <Account v-if="test == true"/>
-  <ModifyAccount v-if="test == false" />
+  <div class="container" v-if="mode == 'read'">
+    <div class="mb-4" v-for="(Object, index) in users" :key="index.id">
+        <div class="card text-center mb-4">
+            <div class="card-header">{{ Object.lastname }} {{ Object.firstname }}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ Object.lastname }}</li>
+                <li class="list-group-item">{{ Object.firstname }}</li>
+                <li class="list-group-item">{{ Object.email }}</li>
+                <li class="list-group-item">Mot de passe</li>
+            </ul>
+        <button class="btn btn-lg btn-primary" type="button" @click="deleteAccount(Object.id)">Supprimer</button>
+        </div>
+    </div>
+  </div>
+  <div class="" tabindex="-1" role="dialog" v-if="mode == 'delete'">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supprimer mon compte</h5>
+                </div>
+                <div class="modal-body">
+                <p>êtes vous sur de vouloir supprimer le compte de {{ user.firstname}} </p>
+                </div>
+                <div class="modal-footer">
+            <button class="btn btn-lg btn-primary col-5" type="button" @click="deleteAccount()">Confirmez</button>
+            <button class="btn btn-lg btn-primary col-5" type="submit" @click="switchToRead()">Annulez</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
-<script>
-import Header from '@/components/Header.vue'
-import Account from '@/components/Account.vue'
-import ModifyAccount from '@/components/ModifyAccount.vue'
 
-export default {
-  name: 'HomeView',
-  components: {
-    Header, Account, ModifyAccount
+
+<script>
+import { mapState } from 'vuex'
+
+import Header from '@/components/Header.vue'
+
+    export default {
+    name: 'AccountView',
+    components: {
+        Header
+    },
+    data() {
+        return {
+            mode: 'read',
+        }
+    },
+    methods: {
+        switchToDelete() {
+            this.mode = "delete"
+        },
+        switchToRead() {
+            this.mode = "read"
+        },
+        deleteAccount(id) {
+            this.$router.push('/')
+            this.$store.dispatch('deleteAccount', {id: id})
+        }
+    },
+    computed: {
+        ...mapState({
+            user: 'userData',
+            users: 'usersData',
+        })
+    },
+      mounted() {
+    if(this.$store.state.user.id == -1) {
+      this.$router.push('/')
+      return;
+    }
+    this.$store.dispatch('getAllUserData')
   },
-  data() {
-      return {
-          user: "Arthur",
-          test: true
-      }
-  }
-}
+    }
 </script>
 
 <style scoped>
@@ -34,5 +87,9 @@ button{
 }
 button:hover {
     background-color: #FF4019;
+}
+.form-control::placeholder {
+            color: black;
+            opacity: 0.7; 
 }
 </style>

@@ -18,24 +18,16 @@ exports.getOnePost = async (req, res, next) => {
             id: parseInt(req.params.id)
         }
     })
-    const messagePost = await message.findMany({
-        where: {
-            post_id: parseInt(req.params.id)
-        }
-    })
-    const allData = {
-        post: onePost,
-        messages: messagePost
-    }
-    res.json(allData)
+    res.json(onePost)
 }
 
 // Création d'un post
 exports.createPost = async (req, res) => {
-    const { userid, post_text } = req.body
+    const { userid, post_title, post_text } = req.body
     const postcreated = await post.create({
         data: {
             userid: parseInt(userid),
+            post_title,
             post_text
         }
     })

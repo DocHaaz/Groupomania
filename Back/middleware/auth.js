@@ -7,7 +7,7 @@ const jsonWebToken = require('jsonwebtoken');
 // Gestion de l'authentification
 module.exports = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.headers.authorization
         const decodedToken = jsonWebToken.verify(token, process.env.TokenSecret);
         const userId = decodedToken.userId;
         if(req.body.userId && req.body.userId !== userId) {
