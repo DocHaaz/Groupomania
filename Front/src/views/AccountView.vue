@@ -1,5 +1,6 @@
 <template>
   <Header/>
+  <div class="home">
     <h1 class="col-8">Compte de {{ user.firstname }} </h1>
     <form class="container col-5" v-if="ask == 'none'">
         <div class="card text-center mb-4">
@@ -42,7 +43,7 @@
             </div>
         </div>
     </div>
-
+    </div>
 </template>
 
 
@@ -100,6 +101,10 @@ import Header from '@/components/Header.vue'
 </script>
 
 <style scoped>
+.home  {
+    width: 80%;
+  margin: auto;
+}
 h1 {
   margin-bottom: 120px;
 }

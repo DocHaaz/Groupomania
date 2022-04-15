@@ -1,8 +1,8 @@
 <template>
-  <nav class="container">
+  <nav class="test">
     <header class="d-flex justify-content-between align-items-center py-3">
-    <router-link to="/home"><img alt="Logo de Groupomania" src="../assets/logo.png"></router-link>
-      <ul class="nav nav-pills">
+    <router-link to="/home"><img alt="Logo de Groupomania" src="../assets/logo.png" class="col-xs"></router-link>
+      <ul class="nav nav-pills mx-4">
         <li class="nav-item"><router-link to="/home" class="nav-link">Accueil</router-link></li>
         <li class="nav-item"><router-link :to="`/user/${ user.id }`" class="nav-link">Mon Compte</router-link></li>
         <li class="nav-item" v-bind:hidden="!user.admin"><router-link to="/user" class="nav-link">Utilisateur</router-link></li>
@@ -43,6 +43,9 @@ export default {
 </script>
 
 <style scoped>
+.test {
+  width: initial;
+}
 nav {
   margin-bottom: 120px;
 }
@@ -55,7 +58,7 @@ nav {
 }
 
 img {
-  width: 500px;
+  width: 450px;
 }
 
 nav a {
@@ -73,5 +76,17 @@ nav a.router-link-exact-active {
   border: 1px solid #FF4019;
   border-radius: 8px;
   margin-left: 10px;
+}
+
+@media screen and (max-width: 992px) {
+  img {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 577px) {
+  img {
+    width: 200px;
+  }
 }
 </style>

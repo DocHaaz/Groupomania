@@ -1,7 +1,8 @@
 <template>
   <Header/>
+  <div class="home">
   <div class="container" v-if="mode == 'read'">
-    <div class="mb-4" v-for="(Object, index) in users" :key="index.id">
+    <div class="mb-4" v-for="(Object, index) in users" :key="index">
         <div class="card text-center mb-4">
             <div class="card-header">{{ Object.lastname }} {{ Object.firstname }}</div>
             <ul class="list-group list-group-flush">
@@ -30,6 +31,7 @@
             </div>
         </div>
     </div>
+  </div>
 </template>
 
 
@@ -46,7 +48,7 @@ import Header from '@/components/Header.vue'
     },
     data() {
         return {
-            mode: 'read',
+            mode: 'read'
         }
     },
     methods: {
@@ -57,27 +59,27 @@ import Header from '@/components/Header.vue'
             this.mode = "read"
         },
         deleteAccount(id) {
-            this.$router.push('/')
             this.$store.dispatch('deleteAccount', {id: id})
+            this.users.splice(this.users.findIndex(i => i.id === id), 1);
         }
     },
     computed: {
         ...mapState({
             user: 'userData',
-            users: 'usersData',
+            users: 'usersData'
         })
     },
-      mounted() {
-    if(this.$store.state.user.id == -1) {
-      this.$router.push('/')
-      return;
-    }
-    this.$store.dispatch('getAllUserData')
-  },
-    }
+    mounted() {
+        this.$store.dispatch('getAllUserData')
+    },
+}
 </script>
 
 <style scoped>
+.home  {
+    width: 80%;
+  margin: auto;
+}
 h1 {
   margin-bottom: 120px;
 }

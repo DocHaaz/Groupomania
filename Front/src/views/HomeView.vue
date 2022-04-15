@@ -1,6 +1,6 @@
 <template>
+    <Header/>
     <div class="home">
-      <Header/>
       <h1 v-if="mode == 'read'">Bonjour {{ user.firstname }}, </h1>
       <div class="container card_container" v-if="mode == 'read'">
         <div class="card mb-5" v-for="(Object, index) in posts" :key="index">
@@ -84,6 +84,10 @@ export default {
 </script>
 
 <style scoped>
+.home  {
+    width: 80%;
+  margin: auto;
+}
 h1 {
   margin-bottom: 120px;
 }

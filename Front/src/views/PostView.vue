@@ -1,5 +1,6 @@
 <template>
     <Header/>
+    <div class="home">
     <div class="container mb-5 card_container" v-if="postMode == 'postUpdate'">
       <div class="card">
         <input type="text" class="form-control" v-model="Lastname" placeholder="Titre">
@@ -52,8 +53,9 @@
     </div>
     <div class="row mb-5"></div>
     <div class="container col-8 text-center">
-      <input type="text" class="form-control mb-3" v-model="message_text" placeholder="Ecrivez votre message...">
+      <input type="text" class="form-control mb-3" v-model="text" placeholder="Ecrivez votre message...">
       <button class="btn btn-lg btn-primary col-4" @click="createMessage()" type="button">Envoyez</button>
+    </div>
     </div>
 </template>
 
@@ -70,6 +72,7 @@ export default {
       message: Object,
       post_text: '',
       message_text: '',
+      text: '',
       postMode: 'postRead',
       messageMode: 'messageRead'
     }
@@ -93,11 +96,11 @@ export default {
     modifyPost() {
       this.$store.dispatch('modifyPost', {
         id: this.post.id,
-        // post_title: this.post_title,
+        post_title: this.post_title,
         post_text: this.post_text
         }).then(res => {
           console.log(res)
-          this.switchToPostRead()
+          this.$router.go()
         }).catch(error => console.log(error))
     },
     deletePost(id) {
@@ -108,7 +111,7 @@ export default {
       this.$store.dispatch('createMessage', {
         userid: this.user.id,
         post_id: this.post.id,
-        message_text: this.message_text
+        message_text: this.text
       }).then(res => {
           console.log(res)
           this.message.push(res.data)
@@ -121,6 +124,7 @@ export default {
         message_text: this.message_text
         }).then(res => {
           console.log(res)
+          this.$router.go()
         }).catch(error => console.log(error))
     },
     async deleteMessage(id) {
@@ -142,6 +146,10 @@ export default {
 </script>
 
 <style scoped>
+.home  {
+    width: 80%;
+  margin: auto;
+}
 button{
     background-color: #1B75BC;
     border: 0px;

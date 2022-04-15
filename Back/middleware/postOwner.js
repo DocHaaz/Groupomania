@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
             id: parseInt(req.params.id)
         },
     })
-    const token = req.headers.authorization
+    const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jsonWebToken.verify(token, process.env.TokenSecret);
     const userAdmin = decodedToken.userAdmin;
     const userId = decodedToken.userId;

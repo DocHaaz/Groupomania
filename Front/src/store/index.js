@@ -14,7 +14,7 @@ if (!user) {
 } else {
   try {
     user = JSON.parse(user)
-    instance.defaults.headers.common['Authorization'] = user.token
+    instance.defaults.headers.common = {'Authorization': `bearer ${user.token}`}
   }
   catch {
     user = {
@@ -43,7 +43,7 @@ export default createStore({
       state.status = status;
     },
     logUser: (state, user) => {
-      instance.defaults.headers.common['Authorization'] = user.token;
+      instance.defaults.headers.common = {'Authorization': `bearer ${user.token}`}
       localStorage.setItem('user', JSON.stringify(user))
       state.user = user;
     },
@@ -137,7 +137,7 @@ export default createStore({
       instance.delete(`/user/`+ id.id)
       .then(res => {
         console.log(res)
-        commit('logoff')
+        commit()
       })
       .catch(error => console.log(error))
     },
