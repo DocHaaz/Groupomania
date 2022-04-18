@@ -1,6 +1,7 @@
 <template>
   <Header/>
   <div class="home">
+      <h1>Utilisateur</h1>
   <div class="container" v-if="mode == 'read'">
     <div class="mb-4" v-for="(Object, index) in users" :key="index">
         <div class="card text-center mb-4">
@@ -15,22 +16,7 @@
         </div>
     </div>
   </div>
-  <div class="" tabindex="-1" role="dialog" v-if="mode == 'delete'">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Supprimer mon compte</h5>
-                </div>
-                <div class="modal-body">
-                <p>êtes vous sur de vouloir supprimer le compte de {{ user.firstname}} </p>
-                </div>
-                <div class="modal-footer">
-            <button class="btn btn-lg btn-primary col-5" type="button" @click="deleteAccount()">Confirmez</button>
-            <button class="btn btn-lg btn-primary col-5" type="submit" @click="switchToRead()">Annulez</button>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
   </div>
 </template>
 
@@ -59,6 +45,7 @@ import Header from '@/components/Header.vue'
             this.mode = "read"
         },
         deleteAccount(id) {
+            console.log(id)
             this.$store.dispatch('deleteAccount', {id: id})
             this.users.splice(this.users.findIndex(i => i.id === id), 1);
         }
@@ -79,6 +66,7 @@ import Header from '@/components/Header.vue'
 .home  {
     width: 80%;
   margin: auto;
+    margin-bottom: 80px;
 }
 h1 {
   margin-bottom: 120px;

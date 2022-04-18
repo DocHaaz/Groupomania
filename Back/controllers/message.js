@@ -3,27 +3,26 @@ const { PrismaClient, prisma } = require("@prisma/client")
 const { message } = new PrismaClient()
 
 // Lecture d'un message
-exports.getOneMessage = async (req, res, next) => {
+exports.getOneMessage = async (req, res) => {
     const oneMessage = await message.findMany({
         where: {
             post_id: parseInt(req.params.id)
         }
     })
-    res.json(oneMessage)
+    return res.status(200).json(oneMessage)
 }
 
 // Création d'un message
 exports.createMessage = async (req, res) => {
-    console.log('test')
     const { userid, message_text, post_id } = req.body
-    const postcreated = await message.create({
+    const messagecreated = await message.create({
         data: {
             userid: parseInt(userid),
             message_text,
             post_id: parseInt(post_id)
         }
     })
-    res.json(postcreated)
+    return res.status(200).json(messagecreated)
 }
 
 // Modification d'un message
@@ -37,7 +36,7 @@ exports.modifyMessage = async (req, res) => {
             message_text
         }
     })
-    res.json(messageModified)
+    return res.status(200).json(messageModified)
 }
 
 // Suppression d'un message
@@ -47,5 +46,5 @@ exports.deleteMessage = async (req, res) => {
             id: parseInt(req.params.id)
         }
     })
-    res.json(messageDeleted)
+    return res.status(200).json(messageDeleted)
 }

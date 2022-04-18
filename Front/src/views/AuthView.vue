@@ -5,31 +5,31 @@
     <h1 class="h3 mb-3 fw-normal" v-if="mode == 'login'">Connexion</h1>
     <h1 class="h3 mb-3 fw-normal" v-else>Inscription</h1>
     <div class="row justify-content-center " v-if="mode == 'create'">
-        <div class="text-start col-4 mb-3">
-        <label for="floatingInput">Nom</label>
-        <input type="text" class="form-control" v-model="Lastname" placeholder="Nom">
+        <div class="text-start col-lg-4 col-sm-8 mb-3">
+        <label for="Lastname">Nom</label>
+        <input type="text" id="Lastname" class="form-control" v-model="Lastname" placeholder="Nom">
         </div>
     </div>
     <div class="row justify-content-center" v-if="mode == 'create'">
-        <div class="text-start col-4 mb-3">
-        <label for="floatingInput">Prénom</label>
-        <input type="text" class="form-control" v-model="Firstname" placeholder="Prénom">
+        <div class="text-start col-lg-4 col-sm-8 mb-3">
+        <label for="Firstname">Prénom</label>
+        <input type="text" id="Firstname" class="form-control" v-model="Firstname" placeholder="Prénom">
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="text-start col-4 mb-3">
-        <label for="floatingInput">Adresse Email</label>
-        <input type="email" class="form-control" v-model="email" placeholder="nom@example.com">
+        <div class="text-start col-lg-4 col-sm-8 mb-3">
+        <label for="email">Adresse Email</label>
+        <input type="email" id="email" class="form-control" v-model="email" placeholder="nom@example.com">
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="text-start col-4 mb-3">
-        <label for="floatingPassword">Mots de passe</label>
-        <input type="password" class="form-control" v-model="password" placeholder="Mots de passe">
+        <div class="text-start col-lg-4 col-sm-8 mb-3">
+        <label for="password">Mots de passe</label>
+        <input type="password" id="password" class="form-control" v-model="password" placeholder="Mots de passe">
         </div>
     </div>
-    <button class="btn btn-lg btn-primary col-4 mb-3" @click="loginAccount()" type="button" v-if="mode == 'login'">Se connecter</button>
-    <button class="btn btn-lg btn-primary col-4 mb-3"  @click="createAccount()" type="button" v-else>S'inscrire</button>
+    <button class="btn btn-lg btn-primary col-lg-4 col-sm-8 mb-3" @click="loginAccount()" type="button" v-if="mode == 'login'">Se connecter</button>
+    <button class="btn btn-lg btn-primary col-lg-4 col-sm-8 mb-3"  @click="createAccount()" type="button" v-else>S'inscrire</button>
     <div class="link-primary mb-3"  @click="switchToCreate()" v-if="mode == 'login'">Vous n'avez pas encore de Compte</div>
     <div class="link-primary mb-3" @click="switchToLogin()" v-else>Vous avez déjà un Compte</div>
     <div class="alert alert-danger col" role="alert" v-if="mode == 'login' && status == 'error_login'">Adresse mail ou mot de passe incorrect</div>
@@ -86,7 +86,6 @@ import { mapState } from 'vuex'
         ...mapState(['status'])
     },
     mounted: function() {
-        console.log(localStorage.getItem('user'))
       if(this.$store.state.user.id == -1) {
           this.$router.push('/')
           return;

@@ -11,7 +11,6 @@ module.exports = (req, res, next) => {
     const decodedToken = jsonWebToken.verify(token, process.env.TokenSecret);
     const userAdmin = decodedToken.userAdmin;
     const userId = JSON.stringify(decodedToken.userId);
-    console.log(decodedToken)
     if(userAdmin === false) {
         if(req.params.id && req.params.id != userId) {
             throw 'User ID non valide';

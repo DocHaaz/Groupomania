@@ -162,7 +162,6 @@ export default createStore({
       .catch(error => console.log(error))
     },
     getOnePost: ({commit}, id) => {
-      console.log(id.id)
       return new Promise((resolve, reject) => {
       instance.get('post/'+ id.id)
       .then(res => {
@@ -174,7 +173,6 @@ export default createStore({
     })
     },
     modifyPost: ({commit}, post) => {
-      console.log(post)
       return new Promise((resolve, reject) => {
         instance.put('post/'+ post.id, post)
         .then(res => {
@@ -207,7 +205,6 @@ export default createStore({
       })
     },
     getMessageData: ({commit}, id) => {
-      console.log(id.id)
       return new Promise((resolve, reject) => {
       instance.get('post/message/'+ id.id)
       .then(res => {
@@ -219,7 +216,6 @@ export default createStore({
     })
   },
   modifyMessage: ({commit}, message) => {
-    console.log(message)
     return new Promise((resolve, reject) => {
       instance.put('post/message/'+ message.id, message)
       .then(res => {
@@ -232,7 +228,6 @@ export default createStore({
     })
   },
     deleteMessage: ({commit}, id) => {
-      console.log(id)
       instance.delete(`/post/message/`+ id.id)
       .then(res => {
         console.log(res)

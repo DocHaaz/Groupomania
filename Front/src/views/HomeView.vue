@@ -1,10 +1,10 @@
 <template>
     <Header/>
-    <div class="home">
+    <div class="home"> 
       <h1 v-if="mode == 'read'">Bonjour {{ user.firstname }}, </h1>
       <div class="container card_container" v-if="mode == 'read'">
         <div class="card mb-5" v-for="(Object, index) in posts" :key="index">
-          <h5 class="card-header">{{ Object.post_text }}</h5>
+          <h2 class="card-header">{{ Object.post_text }}</h2>
           <div class="card-body">
             <p class="card-text">{{ Object.post_text }}</p>
             <p class="blockquote-footer">{{ Object.id }} - Créé le {{ Object.created_at }}</p>
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="container text-center">
-        <button class="btn btn-lg btn-primary col-5" type="button" v-if="mode == 'read'" @click="switchToCreate()">Nouveau post</button>
+        <button class="btn btn-lg btn-primary col-sm-5 col-8" type="button" v-if="mode == 'read'" @click="switchToCreate()">Nouveau post</button>
       </div>
     </div>
     <div class="text-center" tabindex="-1" role="dialog" v-if="mode == 'create'">
@@ -87,6 +87,7 @@ export default {
 .home  {
     width: 80%;
   margin: auto;
+  margin-bottom: 80px;
 }
 h1 {
   margin-bottom: 120px;

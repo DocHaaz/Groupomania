@@ -1,14 +1,19 @@
 <template>
-  <nav class="test">
-    <header class="d-flex justify-content-between align-items-center py-3">
-    <router-link to="/home"><img alt="Logo de Groupomania" src="../assets/logo.png" class="col-xs"></router-link>
-      <ul class="nav nav-pills mx-4">
-        <li class="nav-item"><router-link to="/home" class="nav-link">Accueil</router-link></li>
-        <li class="nav-item"><router-link :to="`/user/${ user.id }`" class="nav-link">Mon Compte</router-link></li>
-        <li class="nav-item" v-bind:hidden="!user.admin"><router-link to="/user" class="nav-link">Utilisateur</router-link></li>
-        <li class="nav-item nav-item-danger"><router-link to="/" @click="logoff()" class="nav-link">Déconnexion</router-link></li>
-      </ul>
-    </header>
+  <nav class="navbar navbar-expand-lg navbar-light">  
+    <div class="container-fluid">
+    <router-link to="/home"><img alt="Logo de Groupomania" src="../assets/logo.png" class="col-xs .navbar-brand"></router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler01" aria-controls="navbarToggler01" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarToggler01">
+        <ul class="nav nav-pills mx-4">
+          <li class="nav-item"><router-link to="/home" class="nav-link">Accueil</router-link></li>
+          <li class="nav-item"><router-link :to="`/user/${ user.id }`" class="nav-link">Mon Compte</router-link></li>
+          <li class="nav-item" v-bind:hidden="!user.admin"><router-link to="/user" class="nav-link">Utilisateur</router-link></li>
+          <li class="nav-item nav-item-danger"><router-link to="/" @click="logoff()" class="nav-link">Déconnexion</router-link></li>
+       </ul>
+      </div>
+    </div>
   </nav>
 </template>
 
@@ -58,7 +63,7 @@ nav {
 }
 
 img {
-  width: 450px;
+  width: 445px;
 }
 
 nav a {
@@ -78,15 +83,15 @@ nav a.router-link-exact-active {
   margin-left: 10px;
 }
 
-@media screen and (max-width: 992px) {
-  img {
-    width: 300px;
+@media screen and (max-width: 991px) {
+   img {
+    width: 400px;
   }
 }
 
 @media screen and (max-width: 577px) {
   img {
-    width: 200px;
+    width: 260px;
   }
 }
 </style>

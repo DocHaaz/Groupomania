@@ -2,7 +2,7 @@
   <Header/>
   <div class="home">
     <h1 class="col-8">Compte de {{ user.firstname }} </h1>
-    <form class="container col-5" v-if="ask == 'none'">
+    <form class="container col-lg-6 col-sm" v-if="ask == 'none'">
         <div class="card text-center mb-4">
             <div class="card-header">{{ user.lastname }} {{ user.firstname }}</div>
             <ul class="list-group list-group-flush" v-if="mode == 'update'">
@@ -83,9 +83,7 @@ import Header from '@/components/Header.vue'
                 firstname: this.firstname,
                 email: this.email,
                 password: this.password
-            }).then(res => {
-                console.log(res)
-            }).catch(error => console.log(error))
+            })
         },
         deleteAccount(id) {
             this.$router.push('/')
@@ -104,6 +102,7 @@ import Header from '@/components/Header.vue'
 .home  {
     width: 80%;
   margin: auto;
+    margin-bottom: 80px;
 }
 h1 {
   margin-bottom: 120px;

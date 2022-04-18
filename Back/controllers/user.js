@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
                 email,
             }
         })
-            res.json(newUser)
+        return res.status(200).json(newUser)
     } else {
         return res.status(401).json({ error: 'Veuillez remplir tout les champs'})
     }
@@ -61,7 +61,7 @@ exports.login = async (req, res) => {
 // récupération de l'ensemble des utilisateur
 exports.getAllUser = async (req, res) => {
     const Users = await user.findMany()
-    res.json(Users)
+    return res.status(200).json(Users)
 }
 
 // Accès au compte de l'utilisateur
@@ -75,7 +75,7 @@ exports.account = async (req, res) => {
         return res.status(403).json({ message: 'Utilisateur inconnu'})
     }
     if (userAccount) {
-        return res.json(userAccount)
+        return res.status(200).json(userAccount)
     }
 }
 
@@ -97,7 +97,7 @@ exports.modify = async (req, res) => {
                 department
             }
         })
-        return res.json(userModify)
+        return res.status(200).json(userModify)
     }   else {
         const userModify = await user.update({
             where: {
@@ -111,7 +111,7 @@ exports.modify = async (req, res) => {
                 department
             }
         })
-        return res.json(userModify)
+        return res.status(200).json(userModify)
     }
 }
 
@@ -122,5 +122,5 @@ exports.delete = async (req, res) => {
             id: parseInt(req.params.id)
         }
     })
-    return res.json(userDelete)
+    return res.status(200).json(userDelete)
 }
