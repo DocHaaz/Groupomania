@@ -15,8 +15,12 @@ exports.getOnePost = async (req, res) => {
     const onePost = await post.findUnique({
         where: {
             id: parseInt(req.params.id)
+        },
+        include: {
+            messages: true
         }
     })
+    console.log(onePost)
     return res.status(200).json(onePost)
 }
 

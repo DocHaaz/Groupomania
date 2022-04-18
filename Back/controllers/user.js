@@ -60,7 +60,15 @@ exports.login = async (req, res) => {
 
 // récupération de l'ensemble des utilisateur
 exports.getAllUser = async (req, res) => {
-    const Users = await user.findMany()
+    const Users = await user.findMany( {
+        select: {
+            id: true,
+            lastname: true,
+            firstname: true,
+            email: true,
+            admin: true
+        }
+    })
     return res.status(200).json(Users)
 }
 
@@ -69,6 +77,13 @@ exports.account = async (req, res) => {
     const userAccount = await user.findUnique({
         where: {
             id: parseInt(req.params.id)
+        },
+        select: {
+            id: true,
+            lastname: true,
+            firstname: true,
+            email: true,
+            admin: true
         }
     })
     if (!userAccount) {
@@ -95,6 +110,13 @@ exports.modify = async (req, res) => {
                 birthdate,
                 email,
                 department
+            },
+            select: {
+                id: true,
+                lastname: true,
+                firstname: true,
+                email: true,
+                admin: true
             }
         })
         return res.status(200).json(userModify)
