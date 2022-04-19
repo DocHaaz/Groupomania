@@ -7,7 +7,7 @@ const { PrismaClient, prisma } = require("@prisma/client")
 
 const { post } = new PrismaClient()
 
-
+// Gestion de propriété de post
 module.exports = async (req, res, next) => {
     const getId = await post.findUnique({
         where: {

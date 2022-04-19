@@ -7,7 +7,7 @@ const { PrismaClient, prisma } = require("@prisma/client")
 
 const { message } = new PrismaClient()
 
-
+// Gestion de propriété de message
 module.exports = async (req, res, next) => {
     const getId = await message.findUnique({
         where: {

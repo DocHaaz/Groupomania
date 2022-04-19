@@ -49,8 +49,8 @@
 
 
 <script>
+// importation de mapState et du Header
 import { mapState } from 'vuex'
-
 import Header from '@/components/Header.vue'
 
     export default {

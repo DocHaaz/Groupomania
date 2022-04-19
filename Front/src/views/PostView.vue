@@ -4,7 +4,7 @@
       <h1 class="mb-5">/p {{post.post_title}}</h1>
     <div class="container mb-5 card_container" v-if="postMode == 'postUpdate'">
       <div class="card">
-        <input type="text" class="form-control" v-model="Lastname" placeholder="Titre">
+        <input type="text" class="form-control" v-model="post_title" placeholder="Titre">
         <div class="card-body">
           <input type="text" class="form-control mb-4" v-model="post_text" placeholder="Texte">
         <div class="d-grid gap-2 d-flex justify-content-end" v-if="owner(post.userid)">
@@ -16,10 +16,10 @@
     </div>
         <div class="container mb-5 card_container" v-if="postMode == 'postRead'">
       <div class="card">
-        <h2 class="card-header">{{post.post_title}} - {{post.userid}}</h2>
+        <h2 class="card-header">{{post.post_title}}</h2>
         <div class="card-body">
           <p class="card-text">{{post.post_text}}</p>
-          <p class="blockquote-footer">{{post.id}} - {{post.created_at}} </p>
+          <p class="blockquote-footer">Créé par {{ postname }} le {{ post.created_at }}</p>
         <div class="d-grid gap-2 d-flex justify-content-end" v-if="owner(post.userid)">
             <button class="btn btn-lg btn-primary" type="submit" @click="switchToPostUpdate()">Modifier</button>
             <button class="btn btn-lg btn-primary" type="button" @click="deletePost(post.id)">Supprimer</button>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="container mb-4" v-for="(Object, index) in message" :key="index">
-      <div class="card_container" v-if="messageMode == 'messageUpdate'">
+      <div class="card_container" v-if="messageMode == ('messageUpdate' + Object.id)">
         <div class="card">
           <div class="card-body">
             <input type="text" class="form-control  mb-4" v-model="message_text" placeholder="Texte">
@@ -43,9 +43,9 @@
         <div class="card">
           <div class="card-body">
             <p class="card-text">{{Object.message_text}}</p>
-            <p class="blockquote-footer">{{Object.id}} {{Object.created_at}} -  {{Object.userid}} {{user.id}}</p>
+            <p class="blockquote-footer">Ecrit par {{Object.user.firstname}} {{Object.user.lastname}} le {{ Object.created_at }}</p>
           <div class="d-grid gap-2 d-flex justify-content-end" v-if="owner(Object.userid)">
-              <button class="btn btn-lg btn-primary" type="submit" @click="switchToMessageUpdate()">Modifier</button>
+              <button class="btn btn-lg btn-primary" type="submit" @click="switchToMessageUpdate(Object.id)">Modifier</button>
               <button class="btn btn-lg btn-primary" type="button" @click="deleteMessage(Object.id)">Supprimer</button>
           </div>
           </div>
@@ -64,6 +64,7 @@
 
 
 <script>
+// importation de mapState et du Header
 import { mapState } from 'vuex'
 import Header from '@/components/Header.vue'
 
@@ -73,9 +74,11 @@ export default {
     return {
       post: Object,
       message: Object,
+      post_title: '',
       post_text: '',
       message_text: '',
       text: '',
+      postname: '',
       postMode: 'postRead',
       messageMode: 'messageRead'
     }
@@ -97,8 +100,8 @@ export default {
     switchToPostRead() {
       this.postMode = 'postRead'
     },
-    switchToMessageUpdate() {
-      this.messageMode = 'messageUpdate'
+    switchToMessageUpdate(id) {
+      this.messageMode = 'messageUpdate' + id
     },
     switchToMessageRead() {
       this.messageMode = 'messageRead'
@@ -124,7 +127,7 @@ export default {
         message_text: this.text
       }).then(res => {
           console.log(res)
-          this.message.push(res.data)
+          this.$router.go()
         })
         .catch(error => console.log(error))
     },
@@ -145,6 +148,7 @@ export default {
     async mounted() {
     this.post = await this.$store.dispatch('getOnePost', { id: this.$route.params.id})
     this.message = await this.$store.dispatch('getMessageData', { id: this.$route.params.id})
+    this.postname = this.post.user.firstname + ' ' + this.post.user.lastname
   },
   computed: {
     ...mapState({

@@ -5,7 +5,7 @@ require('dotenv').config();
 const jsonWebToken = require('jsonwebtoken');
 
 
-
+// Gestion de propriété de compte
 module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jsonWebToken.verify(token, process.env.TokenSecret);
@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     const userId = JSON.stringify(decodedToken.userId);
     if(userAdmin === false) {
         if(req.params.id && req.params.id != userId) {
-            throw 'User ID non valide';
+            return res.status(403).json({ message: 'Requête non authorisée'})
         } else {
             next()
         }

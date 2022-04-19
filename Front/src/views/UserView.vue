@@ -23,8 +23,8 @@
 
 
 <script>
+// importation de mapState et du Header
 import { mapState } from 'vuex'
-
 import Header from '@/components/Header.vue'
 
     export default {
@@ -45,7 +45,6 @@ import Header from '@/components/Header.vue'
             this.mode = "read"
         },
         deleteAccount(id) {
-            console.log(id)
             this.$store.dispatch('deleteAccount', {id: id})
             this.users.splice(this.users.findIndex(i => i.id === id), 1);
         }

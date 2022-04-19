@@ -18,15 +18,11 @@
 </template>
 
 <script>
+// importation de mapState
 import { mapState } from 'vuex'
 
 export default {
   name: 'HeaderView',
-  data() {
-    return {
-      mode: '1',
-    }
-  },
   computed: {
     ...mapState({
       user: 'userData'
@@ -48,9 +44,6 @@ export default {
 </script>
 
 <style scoped>
-.test {
-  width: initial;
-}
 nav {
   margin-bottom: 120px;
 }

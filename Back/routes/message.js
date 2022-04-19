@@ -8,7 +8,7 @@ const messageController = require('../controllers/message')
 const router = express.Router()
 
 // Création des routes Message
-router.get('/:id', auth, messageController.getOneMessage);
+router.get('/:id', auth, messageController.getMessage);
 router.post('/', auth, messageController.createMessage);
 router.put('/:id', auth, owner, messageController.modifyMessage)
 router.delete('/:id', auth, owner, messageController.deleteMessage)

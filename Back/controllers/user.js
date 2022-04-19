@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
                 email,
             }
         })
-        return res.status(200).json(newUser)
+        return res.status(201).json({ message: 'Utilisateur créée'})
     } else {
         return res.status(401).json({ error: 'Veuillez remplir tout les champs'})
     }
@@ -87,7 +87,7 @@ exports.account = async (req, res) => {
         }
     })
     if (!userAccount) {
-        return res.status(403).json({ message: 'Utilisateur inconnu'})
+        return res.status(401).json({ message: 'Utilisateur inconnu'})
     }
     if (userAccount) {
         return res.status(200).json(userAccount)
@@ -96,53 +96,64 @@ exports.account = async (req, res) => {
 
 // Modification d'un compte
 exports.modify = async (req, res) => {
-    const { lastname, firstname, birthdate, email, department } = req.body
-    if( req.body.password) {
-        const hash = await bCrypt.hash(req.body.password, 10)
-        const userModify = await user.update({
-            where: {
-                id: parseInt(req.params.id)
-            },
-            data: {
-                lastname,
-                firstname,
-                password: JSON.stringify(hash),
-                birthdate,
-                email,
-                department
-            },
-            select: {
-                id: true,
-                lastname: true,
-                firstname: true,
-                email: true,
-                admin: true
-            }
-        })
-        return res.status(200).json(userModify)
-    }   else {
-        const userModify = await user.update({
-            where: {
-                id: parseInt(req.params.id)
-            },
-            data: {
-                lastname,
-                firstname,
-                birthdate,
-                email,
-                department
-            }
-        })
-        return res.status(200).json(userModify)
+    if(req.body.lastname == '' || req.body.firstname == '' || req.body.email == '' || req.body.password == '') {
+        return res.status(202).json({ message: 'requête accepter mais une ou plusieur donnée ne sont pas valides' })
+    } else {
+        const { lastname, firstname, email } = req.body
+        if( req.body.password) {
+            const hash = await bCrypt.hash(req.body.password, 10)
+            const userModify = await user.update({
+                where: {
+                    id: parseInt(req.params.id)
+                },
+                data: {
+                    lastname,
+                    firstname,
+                    password: JSON.stringify(hash),
+                    email,
+                },
+                select: {
+                    id: true,
+                    lastname: true,
+                    firstname: true,
+                    email: true,
+                    admin: true
+                }
+            })
+            return res.status(201).json(userModify)
+        }   else {
+            const userModify = await user.update({
+                where: {
+                    id: parseInt(req.params.id)
+                },
+                data: {
+                    lastname,
+                    firstname,
+                    email,
+                },
+                select: {
+                    id: true,
+                    lastname: true,
+                    firstname: true,
+                    email: true,
+                    admin: true
+                }
+            })
+            return res.status(201).json(userModify)
+        }
     }
 }
 
 // Suppression d'un compte
 exports.delete = async (req, res) => {
-    const userDelete = await user.delete({
-        where: {
-            id: parseInt(req.params.id)
-        }
-    })
-    return res.status(200).json(userDelete)
+    if(req.params.id) {
+        const userDelete = await user.delete({
+            where: {
+                id: parseInt(req.params.id)
+            }
+        })
+        return res.status(200).json(userDelete)
+    } else {
+        return res.status(403).json({ message: 'Refus de traitement de la requête' })
+    }
 }

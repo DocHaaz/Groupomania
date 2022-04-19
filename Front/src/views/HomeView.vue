@@ -4,10 +4,10 @@
       <h1 v-if="mode == 'read'">Bonjour {{ user.firstname }}, </h1>
       <div class="container card_container" v-if="mode == 'read'">
         <div class="card mb-5" v-for="(Object, index) in posts" :key="index">
-          <h2 class="card-header">{{ Object.post_text }}</h2>
+          <h2 class="card-header">{{ Object.post_title }}</h2>
           <div class="card-body">
             <p class="card-text">{{ Object.post_text }}</p>
-            <p class="blockquote-footer">{{ Object.id }} - Créé le {{ Object.created_at }}</p>
+            <p class="blockquote-footer">Créé par {{ Object.user.firstname }} {{ Object.user.lastname }} le {{ Object.created_at }}</p>
             <router-link :to="`/post/${ Object.id }`" class="nav-link stretched-link"></router-link>
           </div>
         </div>
@@ -56,7 +56,7 @@ export default {
     createPost() {
       this.$store.dispatch('createPost', {
         userid: this.user.id,
-        post_title: this.text,
+        post_title: this.title,
         post_text: this.text
       }).then(res => {
           console.log(res)
